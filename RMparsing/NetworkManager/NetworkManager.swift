@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Alamofire
 
 enum RickInfo: String, CaseIterable {
     case firstPage = "https://rickandmortyapi.com/api/character?name=rick"
@@ -28,25 +29,18 @@ class NetworkManager {
     
     private init() {}
     
-    func fetchInfo(url: String, completion: @escaping([Character]) -> Void) {
-        guard let url = URL(string: url) else { return }
-        
-        URLSession.shared.dataTask(with: url) { data, _ , error in
-            guard let data = data else {
-                print(error?.localizedDescription ?? "No error description")
-                return }
-            
-            let jsonDecoder = JSONDecoder()
-            
-            do {
-                let rickInfo = try jsonDecoder.decode(Results.self, from: data)
-                let array = rickInfo.results
-                completion(array)
-                
-            } catch {
-                print(error.localizedDescription)
+    func fetchInfoAF(url: String, completion: @escaping([Character]) -> Void) {
+        AF.request(url)
+            .validate()
+            .responseJSON { response in
+                switch response.result {
+                case .success(let value):
+                    let characters = Character.getCharacters(from: value)
+                    completion(characters)
+                case .failure(let error):
+                    print(error)
+                }
             }
-        }.resume()
     }
     
     func fetchImages(urlImage: String, completion: @escaping(Data) -> Void) {

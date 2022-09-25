@@ -18,6 +18,7 @@
 		609E17DD28DCA9B9001F1A67 /* MortyCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 609E17DC28DCA9B9001F1A67 /* MortyCell.swift */; };
 		60BB011928D8FAE90027270B /* RickCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60BB011828D8FAE90027270B /* RickCell.swift */; };
 		60BB011B28D902B60027270B /* CharacterInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60BB011A28D902B60027270B /* CharacterInfo.swift */; };
+		60F80E8128E06C14006E171A /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 60F80E8028E06C14006E171A /* Alamofire */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -41,6 +42,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				60F80E8128E06C14006E171A /* Alamofire in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -154,6 +156,9 @@
 			dependencies = (
 			);
 			name = RMparsing;
+			packageProductDependencies = (
+				60F80E8028E06C14006E171A /* Alamofire */,
+			);
 			productName = RMparsing;
 			productReference = 6050804928D8DF7500BF82E0 /* RMparsing.app */;
 			productType = "com.apple.product-type.application";
@@ -182,6 +187,9 @@
 				Base,
 			);
 			mainGroup = 6050804028D8DF7500BF82E0;
+			packageReferences = (
+				60F80E7F28E06C14006E171A /* XCRemoteSwiftPackageReference "Alamofire" */,
+			);
 			productRefGroup = 6050804A28D8DF7500BF82E0 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -366,6 +374,7 @@
 				DEVELOPMENT_TEAM = GUTQ94996V;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = RMparsing/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = AlamofireHW;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
@@ -394,6 +403,7 @@
 				DEVELOPMENT_TEAM = GUTQ94996V;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = RMparsing/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = AlamofireHW;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
@@ -434,6 +444,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		60F80E7F28E06C14006E171A /* XCRemoteSwiftPackageReference "Alamofire" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Alamofire/Alamofire.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		60F80E8028E06C14006E171A /* Alamofire */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 60F80E7F28E06C14006E171A /* XCRemoteSwiftPackageReference "Alamofire" */;
+			productName = Alamofire;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 6050804128D8DF7500BF82E0 /* Project object */;
 }
