@@ -26,13 +26,9 @@ final class RickCollectionViewController: UICollectionViewController {
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "RickCell", for: indexPath) as! RickCell
         
-        NetworkManager.shared.fetchImages(urlImage: arrayInfo[indexPath.item].image ?? "") { imageData in
-            cell.rickImage.image = UIImage(data: imageData)
-        }
+        let character = arrayInfo[indexPath.item]
         
-        cell.rickNameLabel.text = arrayInfo[indexPath.item].name
-        
-        cell.layer.cornerRadius = 15
+        cell.configure(with: character)
         
         return cell
     }
@@ -65,9 +61,14 @@ extension RickCollectionViewController: UICollectionViewDelegateFlowLayout {
 extension RickCollectionViewController {
     private func fetchInfoAF() {
         for index in 0..<RickInfo.allCases.count {
-            NetworkManager.shared.fetchInfoAF(url: RickInfo.allCases[index].rawValue) { characters in
-                self.arrayInfo += characters
-                self.collectionView.reloadData()
+            NetworkManager.shared.fetchInfoAF(url: RickInfo.allCases[index].rawValue) { result in
+                switch result {
+                case .success(let characters):
+                    self.arrayInfo += characters
+                    self.collectionView.reloadData()
+                case .failure(let error):
+                    print(error.localizedDescription)
+                }
             }
         }
     }

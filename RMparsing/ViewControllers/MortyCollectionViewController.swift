@@ -26,13 +26,9 @@ class MortyCollectionViewController: UICollectionViewController {
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "MortyCell", for: indexPath) as! MortyCell
         
-        NetworkManager.shared.fetchImages(urlImage: arrayInfo[indexPath.item].image ?? "") { imageData in
-            cell.mortyImage.image = UIImage(data: imageData)
-        }
+        let character = arrayInfo[indexPath.item]
         
-        cell.mortyNameLabel.text = arrayInfo[indexPath.item].name
-        
-        cell.layer.cornerRadius = 15
+        cell.configure(with: character)
         
         return cell
     }
@@ -65,9 +61,14 @@ extension MortyCollectionViewController: UICollectionViewDelegateFlowLayout {
 extension MortyCollectionViewController {
     private func fetchInfoAF() {
         for index in 0..<MortyInfo.allCases.count {
-            NetworkManager.shared.fetchInfoAF(url: MortyInfo.allCases[index].rawValue) { characters in
-                self.arrayInfo += characters
-                self.collectionView.reloadData()
+            NetworkManager.shared.fetchInfoAF(url: MortyInfo.allCases[index].rawValue) { result in
+                switch result {
+                case .success(let characters):
+                    self.arrayInfo += characters
+                    self.collectionView.reloadData()
+                case .failure(let error):
+                    print(error.localizedDescription)
+                }
             }
         }
     }

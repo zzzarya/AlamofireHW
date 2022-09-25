@@ -29,28 +29,30 @@ class NetworkManager {
     
     private init() {}
     
-    func fetchInfoAF(url: String, completion: @escaping([Character]) -> Void) {
+    func fetchInfoAF(url: String, completion: @escaping(Result<[Character], AFError>) -> Void) {
         AF.request(url)
             .validate()
             .responseJSON { response in
                 switch response.result {
                 case .success(let value):
                     let characters = Character.getCharacters(from: value)
-                    completion(characters)
+                    completion(.success(characters))
                 case .failure(let error):
-                    print(error)
+                    completion(.failure(error))
                 }
             }
     }
     
-    func fetchImages(urlImage: String, completion: @escaping(Data) -> Void) {
-        guard let url = URL(string: urlImage) else { return }
-        
-        DispatchQueue.global().async {
-            guard let imageData = try? Data(contentsOf: url) else { return }
-            DispatchQueue.main.async {
-                completion(imageData)
+    func fetchDataAF(url: String, completion: @escaping(Result<Data, AFError>) -> Void) {
+        AF.request(url)
+            .responseData { response in
+                switch response.result {
+                case .success(let imageData):
+                    completion(.success(imageData))
+                case .failure(let error):
+                    completion(.failure(error))
+                }
             }
-        }
+        
     }
 }
